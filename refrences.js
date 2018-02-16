@@ -1,37 +1,22 @@
 var mongoose = require("mongoose");
-mongoose.connect("mongodb://localhost/blog_demo_2");
+mongoose.connect("mongodb://localhost/blog_demo_3");
 
-var postSchema = mongoose.Schema({
-    title : String,
-    content : String
-});
+var Posts = require("./models/posts.js");
+var Users = require("./models/users.js");
 
-var PostsModel = mongoose.model("posts",postSchema);
+// Users.create({
+//     name : "ranlama",
+//     email : "ranlam2314@gmail.com"
+// });
 
-var userSchema = mongoose.Schema({
-    name : String,
-    email : String,
-    posts : [{
-        type : mongoose.Schema.Types.ObjectId,
-        ref : "posts"
-    }]
-});
-
-var Users = mongoose.model("users",userSchema);
-Users.create({
-    name : "Rishab",
-    email : "ranlam2304@gmail.com"
-});
-
-PostsModel.create({
-    title : "God let this work",
-    content : "fghjklbldfghjkadfghjkh"
+Posts.create({
+    title : "God let this work pt 2",
+    content : "haha haha haha"
 },function (err, post) {
-    Users.findOne({email : "ranlam2304@gmail.com"},function (err, user) {
+    Users.findOne({email : "ranlam2314@gmail.com"},function (err, user) {
        if(err){
            console.log(err);
        } else{
-
            user.posts.push(post._id);
            user.save(function (err, recUser) {
                if(err){
@@ -43,7 +28,7 @@ PostsModel.create({
     });
 });
 
-Users.findOne({email : "ranlam2304@gmail.com"}).populate("posts").exec(function (err, user) {
+Users.findOne({email : "ranlam2314@gmail.com"}).populate("posts").exec(function (err, user) {
     if(err){
         console.log(err);
     }else {
